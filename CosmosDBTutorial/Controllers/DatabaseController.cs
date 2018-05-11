@@ -40,10 +40,6 @@ namespace CosmosDBTutorial.Controllers
                                                .Where(x => x.Id == id)
                                                .AsEnumerable()
                                                .FirstOrDefault();
-            //The second way to query database by id.
-            //Database database = _documentClient.CreateDatabaseQuery(string.Format("select * from dbs d where d.id = '{0}'", id))
-            //                                   .AsEnumerable()
-            //                                   .FirstOrDefault();
 
             if (database == null)
             {
@@ -75,8 +71,8 @@ namespace CosmosDBTutorial.Controllers
             }
 
             Uri databaseUri = UriFactory.CreateDatabaseUri(id);
-            ResourceResponse<Database> response = await _documentClient.DeleteDatabaseAsync(databaseUri);
-            return Ok(response.Resource);
+            await _documentClient.DeleteDatabaseAsync(databaseUri);
+            return Ok();
         }
 
         private bool ExistsDatabase(string id)
